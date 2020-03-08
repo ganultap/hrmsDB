@@ -1,0 +1,155 @@
+CREATE TABLE Department(
+    dept_id int(25) not null PRIMARY KEY,
+    department_name varchar(45) not null
+
+);
+CREATE TABLE POSITION (
+	position_id int(25) not null PRIMARY KEY,
+    positionName varchar(45) not null
+);
+
+CREATE table employees (
+    emp_id int(25) NOT null PRIMARY KEY,
+    emp_fname varchar(45) not null,
+    emp_lname varchar(45) not null,
+    emp_mname varchar(45) not null,
+    position_id int(25) not null,
+    dept_id int(25) not null,
+    birthdate date not null,
+    age int(25) not null,
+    gender CHAR(2) not null,
+    address varchar(100) not null,
+    date_hired date not null,
+    supervisorID int(25) not null,
+    
+    FOREIGN KEY (position_id) REFERENCES position (position_id),
+    FOREIGN KEY (dept_id) REFERENCES department (dept_id)
+
+);
+
+
+CREATE TABLE login( 
+    username varchar(45) not null primary key,
+    password varchar(45) not null,
+    role varchar(10) not null,
+    emp_id int(25) not null,
+ 
+    
+    FOREIGN KEY (emp_id) REFERENCES employees (emp_id)
+    
+);
+
+create table attendance(
+	emp_id int(25) not null,
+	time_in timestamp not null,
+	time_out datetime not null,
+	remarks varchar(45) not null,
+	attendance_id int(25) not null primary key,
+
+ FOREIGN KEY (emp_id) REFERENCES employees (emp_id)
+
+
+
+);
+
+
+
+
+
+
+
+
+
+
+CREATE table projects(
+    project_id int(25) not null PRIMARY KEY,
+    emp_id int(25) not null,
+    projectHandled varchar(100) not null,
+    dateStarted date not null,
+    dateEnded date not null,
+    status varchar(10) not null,
+    
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+
+
+);
+
+CREATE TABLE LEAVEs(
+	leave_id INT(25) not null PRIMARY KEY,
+    emp_id int(25) not null,
+    starDate date not null,
+    enddate date not null,
+    totalDays int(25) not null,
+    leave_name varchar(45) not null,
+    
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+    
+);
+CREATE TABLE unified_benefits(
+    benefits_id int(25) not null primary key,
+    emp_id int(25) not null,
+    description varchar(25) not null,
+	
+    FOREIGN KEY (emp_id) REFERENCES employees (emp_id)
+);
+
+CREATE TABLE payroll (
+    emp_id int(25) not null,
+    salaryRange varchar(255) not null,
+    annualIncome double not null,
+    taxable double NOT null,
+    loan double not null,
+    benefits_id int(25) not null,
+    
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+    FOREIGN KEY (benefits_id ) REFERENCES unified_benefits(benefits_id)
+
+);
+
+
+#time
+
+
+CREATE table timeAndSchedule(
+
+    timeId int(25) not null PRIMARY KEY,
+    empId int(25) not null,
+    in_time time not null,
+    break_time time not null,
+    out_time time not null,
+    
+    
+    FOREIGN KEY (empId) REFERENCES employees(empID)
+    
+
+
+);
+CREATE TABLE timeTracking(
+    timeId int(25) not null,
+    totaltime time NOT null,
+    
+    FOREIGN KEY (timeId) REFERENCES timeandschedule (timeId)
+
+
+);
+
+create table timeandattendance(
+    emp_id int(25) not null,
+    timeIn date not null,
+    timeout date not null,
+    remarks varchar(500) not null,
+    
+    FOREIGN KEY (emp_id) REFERENCES employees (emp_id)
+    
+    
+    
+
+);
+CREATE table shifting(
+	emp_id int(25) not null,
+    timeInDuty datetime not null,
+    timeOutDuty datetime not null,
+	FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+);
+
+
